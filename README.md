@@ -4,6 +4,25 @@
 
 [デモはこちら](https://mutsuyuki.github.io/vue-firebase-auth-template/)
 
+
+## 1. Firebaseのアプリ情報を変更（自分のアプリのに）。
+
+```
+ // UserStore.tsのinitメソッド内
+ 
+    firebase.initializeApp({
+        apiKey: "",
+        authDomain: "",
+        databaseURL: "",
+        projectId: "",
+        storageBucket: "",
+        messagingSenderId: "",
+        appId: ""
+    });
+```
+
+## 2. 以下のコマンドでインストール～起動
+
 ## Project setup
 ```
 yarn install
