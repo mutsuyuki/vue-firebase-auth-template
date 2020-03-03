@@ -8,7 +8,7 @@
 ## 1. Firebaseのアプリ情報を変更（自分のアプリのに）。
 
 ```
- // UserStore.tsのinitメソッド内
+ // src/store/modules/UserStore.tsのinitメソッド内
  
     firebase.initializeApp({
         apiKey: "",
