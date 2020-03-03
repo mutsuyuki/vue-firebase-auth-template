@@ -52,17 +52,32 @@ class UserStore extends VuexModule {
 
     @Action
     public async init() {
-        return new Promise<void>(resolve => {
+        return new Promise<void>(async resolve => {
+            firebase.initializeApp({
+                apiKey: "",
+                authDomain: "",
+                databaseURL: "",
+                projectId: "",
+                storageBucket: "",
+                messagingSenderId: "",
+                appId: ""
+            });
+
+            // firebaseの初期化を待つ
+            await new Promise<void>(resolveAtFirebaseInit => {
+                const unsubscribe = firebase.auth().onAuthStateChanged(_ => {
+                    unsubscribe();
+                    resolveAtFirebaseInit();
+                });
+            });
+
+            // ログイン保持設定
             firebase.auth().setPersistence(firebase.auth.Auth.Persistence.LOCAL);
             firebase.auth().useDeviceLanguage();
 
+            // 自動ログイン
             const firebaseUser = firebase.auth().currentUser;
             this.setUser(UserStore.makeUserByFirebaseUser(firebaseUser));
-
-            firebase.auth().onAuthStateChanged(user => {
-                console.log("auth state change");
-                this.setUser(UserStore.makeUserByFirebaseUser(user));
-            });
 
             resolve();
         });
