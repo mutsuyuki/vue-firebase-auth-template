@@ -96,7 +96,7 @@ class UserStore extends VuexModule {
                     }
 
                     const actionCodeSetting: firebase.auth.ActionCodeSettings = {
-                        url: window.location.origin + "/"
+                        url: window.location.origin + window.location.pathname
                     };
                     value.user.sendEmailVerification(actionCodeSetting);
 
@@ -214,7 +214,7 @@ class UserStore extends VuexModule {
         return new Promise<ActionResult>(resolve => {
 
             const actionCodeSetting: firebase.auth.ActionCodeSettings = {
-                url: window.location.origin + "/"
+                url: window.location.origin + window.location.pathname
             };
 
             firebase
