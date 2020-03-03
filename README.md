@@ -1,4 +1,8 @@
-# login-tutorial
+# Vue(+Vuex) + Typescript でつくる認証まわりのテンプレート
+
+- 実践で使うための土台やリファレンスとして使って頂ければ。
+
+[デモはこちら](https://mutsuyuki.github.io/vue-firebase-auth-template/)
 
 ## Project setup
 ```
