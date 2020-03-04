@@ -2,8 +2,8 @@
 
 実践で使うための土台やリファレンスとして使って頂ければ。
 
-UserStoreが認証周りを担当するVuexモジュール（こちらががキモ）になります。
-app_templateはUserStoreを利用したテンプレートアプリです。
+- ```UserStore/```が認証周りを担当するVuexモジュールです（こちらががキモ）。
+- ```app_template/```はUserStoreを利用したテンプレートアプリです。
 
 
 [デモはこちら](https://mutsuyuki.github.io/vue-firebase-auth-template/)
