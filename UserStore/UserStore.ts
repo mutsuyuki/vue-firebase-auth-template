@@ -1,5 +1,5 @@
 import {Mutation, Action, VuexModule, getModule, Module} from "vuex-module-decorators";
-import store from "@/store/store";
+import store from "@/store";
 import firebase from "firebase";
 import {
     ActionResult,
@@ -8,7 +8,7 @@ import {
     SignInParam,
     SignUpParam,
     User
-} from "@/store/interfaces/UserStoreTypes";
+} from "./UserStoreInterfaces";
 
 @Module({
     name: "UserStore",
@@ -54,13 +54,15 @@ class UserStore extends VuexModule {
     public async init() {
         return new Promise<void>(async resolve => {
             firebase.initializeApp({
-                apiKey: "",
-                authDomain: "",
-                databaseURL: "",
-                projectId: "",
-                storageBucket: "",
-                messagingSenderId: "",
-                appId: ""
+                apiKey: "AIzaSyBLla-Bgoabz__yXsdqU7FPPPW92rO4ntk",
+                authDomain: "stock-a0daa.firebaseapp.com",
+                databaseURL: "https://stock-a0daa.firebaseio.com",
+                projectId: "stock-a0daa",
+                storageBucket: "stock-a0daa.appspot.com",
+                messagingSenderId: "285247656770",
+                appId: "1:285247656770:web:bacade1b6458d78d78aedb",
+                measurementId: "G-L330KEXGD7"
+
             });
 
             // firebaseの初期化を待つ

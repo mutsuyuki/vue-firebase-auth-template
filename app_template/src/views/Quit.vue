@@ -1,19 +1,18 @@
 <template>
     <div class="page">
-
         <SiteHeader/>
 
-        <form>
+        <form v-if="!isSubmitted">
             <div class="title">
-                ユーザー情報の修正
+                退会処理
             </div>
 
-            <div class="inputs">
-                <input type="text" placeholder="new name" v-model="userName">
-            </div>
+            <p class="explain">
+                全ての登録情報を削除します。
+            </p>
 
             <div class="buttons">
-                <button class="button" @click.prevent="onSubmit">更新</button>
+                <button class="button" @click.prevent="onClickQuit">退会</button>
             </div>
 
             <div class="message" v-show="errorMessage">
@@ -21,43 +20,46 @@
             </div>
         </form>
 
+        <div v-if="isSubmitted" class="confirm-message">
+            ご利用ありがとうございました。
+        </div>
     </div>
 </template>
 
 
 <script lang="ts">
     import {Component, Vue} from 'vue-property-decorator';
-    import UserStore from "@/store/modules/UserStore";
+    import UserStore from "../../../UserStore/UserStore";
     import ErrorMessage from "@/components/ErrorMessage.vue";
-    import {EditUserParam, User} from "@/store/interfaces/UserStoreTypes";
     import SiteHeader from "@/components/SiteHeader.vue";
 
     @Component({
         components: {
+            SiteHeader,
             ErrorMessage,
-            SiteHeader
         }
     })
-    export default class EditUser extends Vue {
-        private userName: string = "";
+    export default class Quit extends Vue {
 
         private errorMessage: string = "";
+        private isSubmitted: boolean = false;
 
-        created(): void {
-            this.userName = UserStore.user.name;
-        }
+        private async onClickQuit() {
+            this.isSubmitted = false;
 
-        private async onSubmit() {
-            const editedUser: EditUserParam = UserStore.user;
-            editedUser.name = this.userName;
-            const result = await UserStore.editUser(editedUser);
+            if (!confirm("この操作は取り消せません、よろしいですか？"))
+                return;
+
+            const result = await UserStore.deleteUser();
             if (result.isError) {
                 this.errorMessage = result.errorMessage;
                 return;
             }
 
-            alert("更新しました")
+            this.isSubmitted = true;
+            setTimeout(() => this.$router.replace({name: "front"}), 3000);
         }
+
     }
 </script>
 
@@ -76,12 +78,9 @@
             text-align: center;
         }
 
-        .inputs {
+        .explain {
             margin-top: 32px;
-
-            * {
-                margin-top: 8px;
-            }
+            text-align: center;
         }
 
         .buttons {
@@ -98,4 +97,9 @@
         }
     }
 
+    .confirm-message {
+        margin: 200px auto 0;
+        width: 80%;
+        text-align: center;
+    }
 </style>

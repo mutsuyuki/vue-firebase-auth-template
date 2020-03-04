@@ -1,10 +1,10 @@
 import Vue from 'vue'
 import VueRouter from 'vue-router'
-import Home from './views/Home.vue'
+import Home from '@/views/Home.vue'
 import SignUp from "@/views/SignUp.vue";
 import Front from "@/views/Front.vue";
 import ResetPassword from "@/views/ResetPassword.vue";
-import UserStore from "@/store/modules/UserStore";
+import UserStore from "../../UserStore/UserStore";
 import EditUser from "@/views/EditUser.vue";
 import SignOut from "@/views/SignOut.vue";
 import Quit from "@/views/Quit.vue";
@@ -69,7 +69,7 @@ const router = new VueRouter({
 
 // ログインチェック
 router.beforeEach((to, from, next) => {
-    const isRequiresAuth: boolean = to.matched.some(v => v.meta.requiresAuth);  // 認証ページにいくか
+    const isRequiresAuth: boolean = to.matched.some(v => v.meta.requiresAuth);  // 要認証ページか
     const isSignedIn: boolean = UserStore.isSignedIn;  // サインイン済みか
 
     // 要認証ページなのにサインアウトしてなかったらフロントページに飛ばす

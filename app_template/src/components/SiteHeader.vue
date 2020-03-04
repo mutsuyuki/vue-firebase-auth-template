@@ -27,7 +27,7 @@
 
 <script lang="ts">
     import {Component, Vue} from 'vue-property-decorator';
-    import UserStore from "@/store/modules/UserStore";
+    import UserStore from "../../../UserStore/UserStore";
     import UserMenu from "@/components/UserMenu.vue";
 
     @Component({

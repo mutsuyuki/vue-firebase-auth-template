@@ -1,20 +1,19 @@
 <template>
     <div class="page">
+
         <SiteHeader/>
 
-        <form v-if="!isSubmitted">
+        <form>
             <div class="title">
-                新規ユーザー登録
+                ユーザー情報の修正
             </div>
 
             <div class="inputs">
-                <input type="text" placeholder="name" v-model="userName">
-                <input type="email" placeholder="email" v-model="email">
-                <input type="password" placeholder="password" v-model="password">
+                <input type="text" placeholder="new name" v-model="userName">
             </div>
 
             <div class="buttons">
-                <button class="button" @click.prevent="onClickSubmit">登録する</button>
+                <button class="button" @click.prevent="onSubmit">更新</button>
             </div>
 
             <div class="message" v-show="errorMessage">
@@ -22,51 +21,42 @@
             </div>
         </form>
 
-        <div v-if="isSubmitted" class="confirm-message">
-            確認メールを送信しました。<br/>
-            ご確認ください。
-        </div>
     </div>
 </template>
 
 
 <script lang="ts">
     import {Component, Vue} from 'vue-property-decorator';
-    import UserStore from "@/store/modules/UserStore";
+    import UserStore from "../../../UserStore/UserStore";
+    import {EditUserParam, User} from "../../../UserStore/UserStoreInterfaces";
     import ErrorMessage from "@/components/ErrorMessage.vue";
     import SiteHeader from "@/components/SiteHeader.vue";
 
     @Component({
         components: {
-            SiteHeader,
             ErrorMessage,
+            SiteHeader
         }
     })
-    export default class SignUp extends Vue {
-
+    export default class EditUser extends Vue {
         private userName: string = "";
-        private email: string = "";
-        private password: string = "";
+
         private errorMessage: string = "";
 
-        private isSubmitted: boolean = false;
+        created(): void {
+            this.userName = UserStore.user.name;
+        }
 
-        private async onClickSubmit() {
-            this.isSubmitted = false;
-            this.errorMessage = "";
-
-            const result = await UserStore.signUp({
-                name: this.userName,
-                email: this.email,
-                password: this.password
-            });
-
+        private async onSubmit() {
+            const editedUser: EditUserParam = UserStore.user;
+            editedUser.name = this.userName;
+            const result = await UserStore.editUser(editedUser);
             if (result.isError) {
                 this.errorMessage = result.errorMessage;
                 return;
             }
 
-            this.isSubmitted = true;
+            alert("更新しました")
         }
     }
 </script>
@@ -108,9 +98,4 @@
         }
     }
 
-    .confirm-message {
-        margin: 200px auto 0;
-        width: 80%;
-        text-align: center;
-    }
 </style>
