@@ -54,14 +54,14 @@ class UserStore extends VuexModule {
     public async init() {
         return new Promise<void>(async resolve => {
             firebase.initializeApp({
-                apiKey: "AIzaSyBLla-Bgoabz__yXsdqU7FPPPW92rO4ntk",
-                authDomain: "stock-a0daa.firebaseapp.com",
-                databaseURL: "https://stock-a0daa.firebaseio.com",
-                projectId: "stock-a0daa",
-                storageBucket: "stock-a0daa.appspot.com",
-                messagingSenderId: "285247656770",
-                appId: "1:285247656770:web:bacade1b6458d78d78aedb",
-                measurementId: "G-L330KEXGD7"
+                apiKey: "",
+                authDomain: "",
+                databaseURL: "",
+                projectId: "",
+                storageBucket: "",
+                messagingSenderId: "",
+                appId: "",
+                measurementId: ""
 
             });
 
