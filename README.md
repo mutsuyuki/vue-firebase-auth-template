@@ -1,6 +1,10 @@
 # Vue(+Vuex) + Typescript でつくる認証まわりのテンプレート
 
-- 実践で使うための土台やリファレンスとして使って頂ければ。
+実践で使うための土台やリファレンスとして使って頂ければ。
+
+- ```UserStore/```が認証周りを担当するVuexモジュールです（こちらががキモ）。
+- ```app_template/```はUserStoreを利用したテンプレートアプリです。
+
 
 [デモはこちら](https://mutsuyuki.github.io/vue-firebase-auth-template/)
 
@@ -8,7 +12,7 @@
 ## 1. Firebaseのアプリ情報を変更（自分のアプリのに）。
 
 ```
- // src/store/modules/UserStore.tsのinitメソッド内
+ // UserStore/UserStore.tsのinitメソッド内
  
     firebase.initializeApp({
         apiKey: "",
