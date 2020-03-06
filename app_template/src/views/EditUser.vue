@@ -29,13 +29,13 @@
     import {Component, Vue} from 'vue-property-decorator';
     import UserStore from "../../../UserStore/UserStore";
     import {EditUserParam, User} from "../../../UserStore/UserStoreInterfaces";
-    import ErrorMessage from "@/components/ErrorMessage.vue";
-    import SiteHeader from "@/components/SiteHeader.vue";
+    import SiteHeader from '../components/SiteHeader.vue';
+    import ErrorMessage from '../components/ErrorMessage.vue';
 
     @Component({
         components: {
-            ErrorMessage,
-            SiteHeader
+            SiteHeader,
+            ErrorMessage
         }
     })
     export default class EditUser extends Vue {

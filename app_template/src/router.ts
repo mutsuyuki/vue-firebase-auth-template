@@ -1,13 +1,14 @@
 import Vue from 'vue'
 import VueRouter from 'vue-router'
-import Home from '@/views/Home.vue'
-import SignUp from "@/views/SignUp.vue";
-import Front from "@/views/Front.vue";
-import ResetPassword from "@/views/ResetPassword.vue";
-import UserStore from "../../UserStore/UserStore";
-import EditUser from "@/views/EditUser.vue";
-import SignOut from "@/views/SignOut.vue";
-import Quit from "@/views/Quit.vue";
+import Front from './views/Front.vue';
+import SignUp from './views/SignUp.vue';
+import ResetPassword from './views/ResetPassword.vue';
+import Home from './views/Home.vue';
+import EditUser from './views/EditUser.vue';
+import SignOut from './views/SignOut.vue';
+import Quit from './views/Quit.vue';
+import UserStore from '../../UserStore/UserStore';
+
 
 Vue.use(VueRouter);
 

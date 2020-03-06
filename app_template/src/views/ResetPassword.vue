@@ -32,8 +32,8 @@
 <script lang="ts">
     import {Component, Vue} from 'vue-property-decorator';
     import UserStore from "../../../UserStore/UserStore";
-    import ErrorMessage from "@/components/ErrorMessage.vue";
-    import SiteHeader from "@/components/SiteHeader.vue";
+    import SiteHeader from '../components/SiteHeader.vue';
+    import ErrorMessage from '../components/ErrorMessage.vue';
 
     @Component({
         components: {

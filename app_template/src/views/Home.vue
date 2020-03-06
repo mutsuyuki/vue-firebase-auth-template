@@ -17,7 +17,7 @@
 
 <script lang="ts">
     import {Component, Vue} from 'vue-property-decorator';
-    import SiteHeader from "@/components/SiteHeader.vue";
+    import SiteHeader from '../components/SiteHeader.vue';
 
     @Component({
         components: {
