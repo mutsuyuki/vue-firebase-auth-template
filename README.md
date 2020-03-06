@@ -25,6 +25,7 @@
     });
 ```
 
+
 ## 2. 以下のコマンドでインストール～起動
 
 ## Project setup
@@ -42,20 +43,35 @@ yarn run serve
 yarn run build
 ```
 
-### Run your tests
+
+## 別プロジェクトでライブラリとして使うとき
+
+##### 入れてなければ以下のモジュールを入れる
+- ```yarn add firebase``` する
+- ```yarn add vuex-module-decorators -D``` する
+
+
+##### メインのプロジェクトの```tsconfig.json```に以下を追記
+（定義ファイルの重複エラーを回避）
 ```
-yarn run test
+  "exclude": [
+    "node_modules",
+    "クローンした場所/**/shims-tsx.d.ts",
+    "クローンした場所/**/shims-vue.d.ts"
+  ]
 ```
 
-### Lints and fixes files
+##### メインのプロジェクトの```main.ts```で初期化処理を入れる
 ```
-yarn run lint
+(async () => {
+  await UserStore.init();
+
+  new Vue({
+    router,
+    store,
+    render: h => h(App)
+  }).$mount('#app');
+})();
 ```
 
-### Run your unit tests
-```
-yarn run test:unit
-```
 
-### Customize configuration
-See [Configuration Reference](https://cli.vuejs.org/config/).
