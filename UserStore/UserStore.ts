@@ -1,14 +1,10 @@
 import {Mutation, Action, VuexModule, getModule, Module} from "vuex-module-decorators";
 import store from "@/store";
 import firebase from "firebase";
-import {
-    ActionResult,
-    EditUserParam,
-    SendPasswordResetParam,
-    SignInParam,
-    SignUpParam,
-    User
-} from "./UserStoreEntities";
+import {User} from "./UserStoreEntities";
+import {EditUserParam, SendPasswordResetParam, SignInParam, SignUpParam} from "./UserStoreParams";
+import {ActionResult} from "./ActionResult";
+
 
 @Module({
     name: "UserStore",
