@@ -8,7 +8,7 @@ import {
     SignInParam,
     SignUpParam,
     User
-} from "./UserStoreInterfaces";
+} from "./UserStoreEntities";
 
 @Module({
     name: "UserStore",
@@ -62,7 +62,6 @@ class UserStore extends VuexModule {
                 messagingSenderId: "",
                 appId: "",
                 measurementId: ""
-
             });
 
             // firebaseの初期化を待つ
