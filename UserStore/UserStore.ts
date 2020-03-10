@@ -1,9 +1,10 @@
 import {Mutation, Action, VuexModule, getModule, Module} from "vuex-module-decorators";
 import store from "@/store";
 import firebase from "firebase";
-import {User} from "./UserStoreEntities";
+import {User} from "./UserStoreEntity";
 import {EditUserParam, SendPasswordResetParam, SignInParam, SignUpParam} from "./UserStoreParams";
 import {ActionResult} from "./ActionResult";
+import ActionResultFactory from "./ActionResultFactory";
 
 
 @Module({
@@ -97,7 +98,7 @@ class UserStore extends VuexModule {
                     };
                     value.user.sendEmailVerification(actionCodeSetting);
 
-                    return UserStore.makeSuccessResult();
+                    return ActionResultFactory.makeSuccessResult();
                 })
                 .catch(error => {
                     return UserStore.makeFailedResultByFirebaseError(error);
@@ -137,7 +138,7 @@ class UserStore extends VuexModule {
                 return;
             }
 
-            resolve(UserStore.makeSuccessResult());
+            resolve(ActionResultFactory.makeSuccessResult());
         });
     }
 
@@ -159,7 +160,7 @@ class UserStore extends VuexModule {
                     }
 
                     this.setUser(UserStore.makeUserByFirebaseUser(value.user));
-                    resolve(UserStore.makeSuccessResult());
+                    resolve(ActionResultFactory.makeSuccessResult());
                 })
                 .catch(error => {
                     resolve(UserStore.makeFailedResultByFirebaseError(error));
@@ -182,7 +183,7 @@ class UserStore extends VuexModule {
                 .then(value => {
                     const editedUser = UserStore.makeUserByFirebaseUser(firebaseUser);
                     this.setUser(editedUser);
-                    resolve(UserStore.makeSuccessResult());
+                    resolve(ActionResultFactory.makeSuccessResult());
                 })
                 .catch(error => {
                     resolve(UserStore.makeFailedResultByFirebaseError(error));
@@ -198,7 +199,7 @@ class UserStore extends VuexModule {
                 .signOut()
                 .then(_ => {
                     this.setUser(UserStore.makeEmptyUser());
-                    resolve(UserStore.makeSuccessResult());
+                    resolve(ActionResultFactory.makeSuccessResult());
                 })
                 .catch(error => {
                     resolve(UserStore.makeFailedResultByFirebaseError(error));
@@ -218,7 +219,7 @@ class UserStore extends VuexModule {
                 .auth()
                 .sendPasswordResetEmail(param.email, actionCodeSetting)
                 .then(_ => {
-                    resolve(UserStore.makeSuccessResult());
+                    resolve(ActionResultFactory.makeSuccessResult());
                 })
                 .catch(error => {
                     resolve(UserStore.makeFailedResultByFirebaseError(error));
@@ -239,7 +240,7 @@ class UserStore extends VuexModule {
                 .delete()
                 .then(value => {
                     this.setUser(UserStore.makeEmptyUser());
-                    resolve(UserStore.makeSuccessResult());
+                    resolve(ActionResultFactory.makeSuccessResult());
                 })
                 .catch(error => {
                     resolve(UserStore.makeFailedResultByFirebaseError(error));
@@ -273,23 +274,6 @@ class UserStore extends VuexModule {
         }
     }
 
-
-    private static makeSuccessResult(): ActionResult {
-        return {
-            isError: false,
-            errorCode: "",
-            errorMessage: ""
-        }
-    }
-
-    private static makeFailedResult(error: { code: string, message: string }): ActionResult {
-        return {
-            isError: true,
-            errorCode: error.code,
-            errorMessage: error.message
-        }
-    }
-
     private static makeFailedResultByCode(errorCode: string): ActionResult {
         const errorMessages: { [code: string]: string } = {
             "001": "Please click the URL to verify your email address",
@@ -297,14 +281,14 @@ class UserStore extends VuexModule {
             "999": "Unexpected error occurred"
         };
 
-        return UserStore.makeFailedResult({
+        return ActionResultFactory.makeFailedResult({
             code: errorCode,
             message: errorMessages[errorCode]
         });
     }
 
     private static makeFailedResultByFirebaseError(firebaseError: firebase.FirebaseError): ActionResult {
-        return UserStore.makeFailedResult({
+        return ActionResultFactory.makeFailedResult({
             code: firebaseError.code,
             message: firebaseError.message
         });

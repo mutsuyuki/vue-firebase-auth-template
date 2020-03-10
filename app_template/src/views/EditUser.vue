@@ -28,7 +28,8 @@
 <script lang="ts">
     import {Component, Vue} from 'vue-property-decorator';
     import UserStore from "../../../UserStore/UserStore";
-    import {EditUserParam, User} from "../../../UserStore/UserStoreEntities";
+    import {User} from "../../../UserStore/UserStoreEntity";
+    import {EditUserParam} from "../../../UserStore/UserStoreParams";
     import SiteHeader from '../components/SiteHeader.vue';
     import ErrorMessage from '../components/ErrorMessage.vue';
 
