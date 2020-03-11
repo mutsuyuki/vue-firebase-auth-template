@@ -47,8 +47,8 @@ yarn run build
 ## 別プロジェクトでライブラリとして使うとき
 
 ##### 入れてなければ以下のモジュールを入れる
-- ```yarn add firebase``` する
-- ```yarn add vuex-module-decorators -D``` する
+- ```yarn add firebase``` 
+- ```yarn add vuex-module-decorators -D``` 
 
 
 ##### メインのプロジェクトの```tsconfig.json```に以下を追記
