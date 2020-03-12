@@ -38,7 +38,7 @@
 
 <script lang="ts">
     import {Component, Vue} from 'vue-property-decorator';
-    import UserStore from "../../../UserStore/UserStore";
+    import UserStore from "../../../store/modules/UserStore/UserStore";
     import SiteHeader from '../components/SiteHeader.vue';
     import ErrorMessage from '../components/ErrorMessage.vue';
 

@@ -7,7 +7,7 @@ import Home from './views/Home.vue';
 import EditUser from './views/EditUser.vue';
 import SignOut from './views/SignOut.vue';
 import Quit from './views/Quit.vue';
-import UserStore from '../../UserStore/UserStore';
+import UserStore from '../../store/modules/UserStore/UserStore';
 
 
 Vue.use(VueRouter);

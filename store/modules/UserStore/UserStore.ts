@@ -1,10 +1,10 @@
 import {Mutation, Action, VuexModule, getModule, Module} from "vuex-module-decorators";
-import store from "@/store";
+import store from "../../../app_template/src/store";
 import firebase from "firebase";
 import {User} from "./UserStoreEntity";
 import {EditUserParam, SendPasswordResetParam, SignInParam, SignUpParam} from "./UserStoreParams";
-import {ActionResult} from "./ActionResult";
-import ActionResultFactory from "./ActionResultFactory";
+import {ActionResult} from "../../common/ActionResult";
+import ActionResultFactory from "../../common/ActionResultFactory";
 
 
 @Module({
@@ -46,39 +46,15 @@ class UserStore extends VuexModule {
         this._user = user;
     }
 
-
     @Action
-    public async init() {
-        return new Promise<void>(async resolve => {
-            firebase.initializeApp({
-                apiKey: "",
-                authDomain: "",
-                databaseURL: "",
-                projectId: "",
-                storageBucket: "",
-                messagingSenderId: "",
-                appId: "",
-                measurementId: ""
-            });
+    public autoSignInIfEnable() {
+        // ログイン保持設定
+        firebase.auth().setPersistence(firebase.auth.Auth.Persistence.LOCAL);
+        firebase.auth().useDeviceLanguage();
 
-            // firebaseの初期化を待つ
-            await new Promise<void>(resolveAtFirebaseInit => {
-                const unsubscribe = firebase.auth().onAuthStateChanged(_ => {
-                    unsubscribe();
-                    resolveAtFirebaseInit();
-                });
-            });
-
-            // ログイン保持設定
-            firebase.auth().setPersistence(firebase.auth.Auth.Persistence.LOCAL);
-            firebase.auth().useDeviceLanguage();
-
-            // 自動ログイン
-            const firebaseUser = firebase.auth().currentUser;
-            this.setUser(UserStore.makeUserByFirebaseUser(firebaseUser));
-
-            resolve();
-        });
+        // 自動ログイン
+        const firebaseUser = firebase.auth().currentUser;
+        this.setUser(UserStore.makeUserByFirebaseUser(firebaseUser));
     }
 
     @Action
