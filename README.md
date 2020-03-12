@@ -2,7 +2,7 @@
 
 実践で使うための土台やリファレンスとして使って頂ければ。
 
-- ```UserStore/```が認証周りを担当するVuexモジュールです（こちらががキモ）。
+- ```store/modules/UserStore/```が認証周りを担当するVuexモジュールです（こちらががキモ）。
 - ```app_template/```はUserStoreを利用したテンプレートアプリです。
 
 
@@ -12,7 +12,7 @@
 ## 1. Firebaseのアプリ情報を変更（自分のアプリのに）。
 
 ```
- // UserStore/UserStore.tsのinitメソッド内
+ // store/modules/UserStore/UserStore.tsのinitメソッド内
  
     firebase.initializeApp({
         apiKey: "",
@@ -64,7 +64,14 @@ yarn run build
 ##### メインのプロジェクトの```main.ts```で初期化処理を入れる
 ```
 (async () => {
-  await UserStore.init();
+    // データベース接続
+    const connectResult = await DatabaseConnector.connect();
+    if (connectResult.isError) {
+        alert(connectResult.errorMessage);
+        return;
+    }
+
+    UserStore.autoSignInIfEnable();
 
   new Vue({
     router,
