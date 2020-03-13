@@ -29,7 +29,7 @@ export default class DatabaseConnector {
                 });
             });
 
-            resolve(ActionResultFactory.makeSuccessResult());
+            resolve(ActionResultFactory.makeSuccess());
         });
     }
 
@@ -38,7 +38,7 @@ export default class DatabaseConnector {
             "001": "database connection timeout"
         };
 
-        return ActionResultFactory.makeFailedResult({
+        return ActionResultFactory.makeFailed({
             code: errorCode,
             message: errorMessages[errorCode]
         });

@@ -3,7 +3,7 @@ import {ActionResult} from "./ActionResult";
 
 export default class ActionResultFactory {
 
-    public static makeSuccessResult(): ActionResult {
+    public static makeSuccess(): ActionResult {
         return {
             isError: false,
             errorCode: "",
@@ -11,7 +11,7 @@ export default class ActionResultFactory {
         }
     }
 
-    public static makeFailedResult(error: { code: string, message: string }): ActionResult {
+    public static makeFailed(error: { code: string, message: string }): ActionResult {
         return {
             isError: true,
             errorCode: error.code,

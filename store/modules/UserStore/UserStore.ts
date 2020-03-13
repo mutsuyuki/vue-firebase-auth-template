@@ -61,35 +61,47 @@ class UserStore extends VuexModule {
     public async signUp(param: SignUpParam) {
         return new Promise<ActionResult>(async resolve => {
             // ユーザー作成
-            const resultCreateUser = await firebase
-                .auth()
+            const createUserResult = await firebase.auth()
                 .createUserWithEmailAndPassword(param.email, param.password)
                 .then(value => {
-                    if (!value.user) {
+                    if (!value.user)
                         return UserStore.makeFailedResultByCode("999");  // ありえないはず
-                    }
 
-                    const actionCodeSetting: firebase.auth.ActionCodeSettings = {
-                        url: window.location.origin + window.location.pathname
-                    };
-                    value.user.sendEmailVerification(actionCodeSetting);
-
-                    return ActionResultFactory.makeSuccessResult();
+                    return ActionResultFactory.makeSuccess();
                 })
                 .catch(error => {
                     return UserStore.makeFailedResultByFirebaseError(error);
                 });
 
             // ユーザー作成エラーのチェック
-            if (resultCreateUser.isError) {
-                resolve(resultCreateUser);
+            if (createUserResult.isError) {
+                resolve(createUserResult);
                 return;
             }
 
             // ユーザー取得
             const firebaseUser = firebase.auth().currentUser;
             if (!firebaseUser) {
-                return UserStore.makeFailedResultByCode("999");  // ありえないはず
+                resolve(UserStore.makeFailedResultByCode("999"));  // ありえないはず
+                return;
+            }
+
+            // 認証メール送信
+            const sendEmalResult = await firebaseUser
+                .sendEmailVerification({
+                    url: window.location.origin + window.location.pathname
+                })
+                .then(value => {
+                    return ActionResultFactory.makeSuccess();
+                })
+                .catch(error => {
+                    return UserStore.makeFailedResultByFirebaseError(error);
+                });
+
+            // ユーザー作成エラーのチェック
+            if (sendEmalResult.isError) {
+                resolve(sendEmalResult);
+                return;
             }
 
             // ユーザー名の登録
@@ -114,7 +126,7 @@ class UserStore extends VuexModule {
                 return;
             }
 
-            resolve(ActionResultFactory.makeSuccessResult());
+            resolve(ActionResultFactory.makeSuccess());
         });
     }
 
@@ -136,7 +148,7 @@ class UserStore extends VuexModule {
                     }
 
                     this.setUser(UserStore.makeUserByFirebaseUser(value.user));
-                    resolve(ActionResultFactory.makeSuccessResult());
+                    resolve(ActionResultFactory.makeSuccess());
                 })
                 .catch(error => {
                     resolve(UserStore.makeFailedResultByFirebaseError(error));
@@ -159,7 +171,7 @@ class UserStore extends VuexModule {
                 .then(value => {
                     const editedUser = UserStore.makeUserByFirebaseUser(firebaseUser);
                     this.setUser(editedUser);
-                    resolve(ActionResultFactory.makeSuccessResult());
+                    resolve(ActionResultFactory.makeSuccess());
                 })
                 .catch(error => {
                     resolve(UserStore.makeFailedResultByFirebaseError(error));
@@ -175,7 +187,7 @@ class UserStore extends VuexModule {
                 .signOut()
                 .then(_ => {
                     this.setUser(UserStore.makeEmptyUser());
-                    resolve(ActionResultFactory.makeSuccessResult());
+                    resolve(ActionResultFactory.makeSuccess());
                 })
                 .catch(error => {
                     resolve(UserStore.makeFailedResultByFirebaseError(error));
@@ -195,7 +207,7 @@ class UserStore extends VuexModule {
                 .auth()
                 .sendPasswordResetEmail(param.email, actionCodeSetting)
                 .then(_ => {
-                    resolve(ActionResultFactory.makeSuccessResult());
+                    resolve(ActionResultFactory.makeSuccess());
                 })
                 .catch(error => {
                     resolve(UserStore.makeFailedResultByFirebaseError(error));
@@ -216,7 +228,7 @@ class UserStore extends VuexModule {
                 .delete()
                 .then(value => {
                     this.setUser(UserStore.makeEmptyUser());
-                    resolve(ActionResultFactory.makeSuccessResult());
+                    resolve(ActionResultFactory.makeSuccess());
                 })
                 .catch(error => {
                     resolve(UserStore.makeFailedResultByFirebaseError(error));
@@ -257,14 +269,14 @@ class UserStore extends VuexModule {
             "999": "Unexpected error occurred"
         };
 
-        return ActionResultFactory.makeFailedResult({
+        return ActionResultFactory.makeFailed({
             code: errorCode,
             message: errorMessages[errorCode]
         });
     }
 
     private static makeFailedResultByFirebaseError(firebaseError: firebase.FirebaseError): ActionResult {
-        return ActionResultFactory.makeFailedResult({
+        return ActionResultFactory.makeFailed({
             code: firebaseError.code,
             message: firebaseError.message
         });
