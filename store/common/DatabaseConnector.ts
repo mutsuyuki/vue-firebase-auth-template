@@ -1,11 +1,11 @@
-import {ActionResult} from "./ActionResult";
+import {ResultStatus} from "./ResultStatus";
 import firebase from "firebase";
-import ActionResultFactory from "./ActionResultFactory";
+import ResultStatusFactory from "./ResultStatusFactory";
 
 export default class DatabaseConnector {
 
     public static async connect() {
-        return new Promise<ActionResult>(async resolve => {
+        return new Promise<ResultStatus>(async resolve => {
             firebase.initializeApp({
                 apiKey: "AIzaSyBqQoA24zxm4puPW8USlOKWRv83-m7MwpU",
                 authDomain: "logintutorial-e5644.firebaseapp.com",
@@ -18,7 +18,7 @@ export default class DatabaseConnector {
 
             // firebaseの初期化が終わらない場合対策（タイムアウト）
             setTimeout(() => {
-                resolve(this.makeFailedResultByCode("001"))
+                resolve(ResultStatusFactory.makeFailed("DB_CONNECT_001"))
             }, 5000);
 
             // firebaseの初期化を待つ
@@ -29,19 +29,7 @@ export default class DatabaseConnector {
                 });
             });
 
-            resolve(ActionResultFactory.makeSuccess());
+            resolve(ResultStatusFactory.makeSuccess());
         });
     }
-
-    private static makeFailedResultByCode(errorCode: string): ActionResult {
-        const errorMessages: { [code: string]: string } = {
-            "001": "database connection timeout"
-        };
-
-        return ActionResultFactory.makeFailed({
-            code: errorCode,
-            message: errorMessages[errorCode]
-        });
-    }
-
 }

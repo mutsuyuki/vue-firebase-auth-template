@@ -61,13 +61,14 @@
         private async onClickSignIn() {
             this.errorMessage = "";
 
-            const result = await UserStore.signIn({
+            const result = await UserStore.signInByPassword({
                 email: this.email,
                 password: this.password
             });
 
             if (result.isError) {
                 this.errorMessage = result.errorMessage;
+                console.log(result.errorCode)
                 return;
             }
 

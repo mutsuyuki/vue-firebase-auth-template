@@ -16,7 +16,7 @@ Vue.config.productionTip = false;
         return;
     }
 
-    UserStore.autoSignInIfEnable();
+    await UserStore.autoSignInIfEnable();
 
     new Vue({
         router,

@@ -55,7 +55,7 @@
             this.isSubmitted = false;
             this.errorMessage = "";
 
-            const result = await UserStore.signUp({
+            const result = await UserStore.signUpByPassword({
                 name: this.userName,
                 email: this.email,
                 password: this.password

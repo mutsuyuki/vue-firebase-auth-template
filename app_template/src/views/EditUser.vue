@@ -28,10 +28,10 @@
 <script lang="ts">
     import {Component, Vue} from 'vue-property-decorator';
     import UserStore from "../../../store/modules/UserStore/UserStore";
-    import {User} from "../../../store/modules/UserStore/UserStoreEntity";
-    import {EditUserParam} from "../../../store/modules/UserStore/UserStoreParams";
+    import {User} from "../../../store/modules/UserStore/UserEntity";
     import SiteHeader from '../components/SiteHeader.vue';
     import ErrorMessage from '../components/ErrorMessage.vue';
+    import DeepCloner from "../../../store/common/DeepCloner";
 
     @Component({
         components: {
@@ -49,7 +49,7 @@
         }
 
         private async onSubmit() {
-            const editedUser: EditUserParam = UserStore.user;
+            const editedUser: User = DeepCloner.copyJson(UserStore.user);
             editedUser.name = this.userName;
             const result = await UserStore.editUser(editedUser);
             if (result.isError) {

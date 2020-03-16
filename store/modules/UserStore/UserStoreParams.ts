@@ -1,20 +1,13 @@
-export interface SignUpParam {
+export interface SignUpByPasswordParam {
     name: string;
     email: string;
     password: string,
 }
 
-export interface SignInParam {
+export interface SignInByPasswordParam {
     email: string;
     password: string
 }
-
-export interface EditUserParam {
-    name: string;
-    email: string;
-    photoURL?: string;
-}
-
 
 export interface SendPasswordResetParam {
     email: string;
