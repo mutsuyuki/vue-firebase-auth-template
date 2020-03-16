@@ -1,7 +1,8 @@
 # Vue(+Vuex) + Typescript でつくる認証まわりのテンプレート
 
-実践で使うための土台やリファレンスとして使って頂ければ。
 Authユーザー＋Firestore内にusersコレクションを作成するようになっています。
+
+実践で使うための土台やリファレンスとして使って頂ければ。
 
 - ```store/modules/UserStore/```が認証周りを担当するVuexモジュールです（こちらががキモ）。
 - ```app_template/```はUserStoreを利用したテンプレートアプリです。
