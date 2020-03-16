@@ -8,11 +8,16 @@
 
 [デモはこちら](https://mutsuyuki.github.io/vue-firebase-auth-template/)
 
+## 0. Firebaseの設定
+
+- メール＆パスワードでのログインの有効化
+- Databaseを作成しておく（コレクションは空の状態でよい）
+
 
 ## 1. Firebaseのアプリ情報を変更（自分のアプリのに）。
 
 ```
- // store/modules/UserStore/UserStore.tsのinitメソッド内
+ // store/common/DatabaseConnector.tsのconnect関数内
  
     firebase.initializeApp({
         apiKey: "",
@@ -71,7 +76,7 @@ yarn run build
         return;
     }
 
-    UserStore.autoSignInIfEnable();
+    await UserStore.autoSignInIfEnable();
 
   new Vue({
     router,
