@@ -1,6 +1,6 @@
 # Vue(+Vuex) + Typescript でつくる認証まわりのテンプレート
 
-Authユーザー＋Firestore内にusersコレクションを作成するようになっています。
+firebaseのAuthentication＋Firestoreのusersコレクションでユーザーを管理するアプリのテンプレートです。
 
 実践で使うための土台やリファレンスとして使って頂ければ。
 
@@ -10,7 +10,7 @@ Authユーザー＋Firestore内にusersコレクションを作成するよう�
 ## 0. Firebaseの設定
 
 - メール＆パスワードでのログインの有効化
-- Databaseを作成しておく（コレクションは空の状態でよい）
+- Databaseを作成しておく（コレクションは空の状態でよい。ユーザー登録時にusersコレクションを作成します。）
 
 
 ## 1. Firebaseのアプリ情報を変更（自分のアプリのものに）。
